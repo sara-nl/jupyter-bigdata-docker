@@ -3,6 +3,6 @@
 <!-- NameNode -->
 <property>
   <name>fs.default.name</name>
-  <value>hdfs://management.service.consul:8020</value>
+  <value>hdfs://hadoop.borg.surfsara.nl:8020</value>
 </property>
 </configuration>
