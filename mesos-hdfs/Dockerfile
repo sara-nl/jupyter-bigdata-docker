@@ -26,6 +26,16 @@ RUN cd /opt/hathi-client/hadoop/etc/hadoop/ && \
 
 USER jovyan
 
+RUN mkdir /home/jovyan/work/data && \
+	cd /home/jovyan/work/data && \
+	wget http://beehub.nl/surfsara-hadoop/public/2008.csv.gz && \
+	wget http://beehub.nl/surfsara-hadoop/public/20newsgroups.labelled.json.gz && \
+	wget http://beehub.nl/surfsara-hadoop/public/alice.txt
+
+RUN cd /home/jovyan && \
+	git clone https://github.com/sara-nl/jupyter-bigdata-notebooks && \
+	ln -s /home/jovyan/jupyter-bigdata-notebooks/notebooks/ /home/jovyan/work/notebooks/
+
 RUN /opt/conda/envs/python2/bin/pip install "snakebite"
 RUN /opt/conda/envs/python2/bin/pip install test_helper
 
