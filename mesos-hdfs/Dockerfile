@@ -34,7 +34,7 @@ RUN mkdir /home/jovyan/work/data && \
 
 RUN cd /home/jovyan && \
 	git clone https://github.com/sara-nl/jupyter-bigdata-notebooks && \
-	ln -s /home/jovyan/jupyter-bigdata-notebooks/notebooks/ /home/jovyan/work/notebooks/
+	ln -s /home/jovyan/jupyter-bigdata-notebooks/notebooks/ /home/jovyan/work/notebooks
 
 RUN /opt/conda/envs/python2/bin/pip install "snakebite"
 RUN /opt/conda/envs/python2/bin/pip install test_helper
