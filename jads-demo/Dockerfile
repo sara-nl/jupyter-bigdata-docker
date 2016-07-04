@@ -51,7 +51,6 @@ RUN conda config --add channels r && \
     'r-randomforest=4.6*' && conda clean -tipsy
 
 RUN conda install --name python2 \
-    'networkx=1.1*'\
     'pandas-datareader=0.2*'\
     'pillow=3.0*'\
     'pyproj=1.9*'\
@@ -61,7 +60,7 @@ RUN conda install --name python2 \
     'basemap=1.0*'\
     && conda clean -yt
 
-RUN /opt/conda/envs/python2/bin/pip install pyshp fiona xlrd folium shapely cesiumpy
+RUN /opt/conda/envs/python2/bin/pip install networkx pyshp fiona xlrd folium shapely cesiumpy
 
 RUN julia -e 'Pkg.add("IJulia")' && \
     mv /home/jovyan/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
