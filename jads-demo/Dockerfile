@@ -42,7 +42,6 @@ RUN conda config --add channels r && \
     'r-shiny=0.12*' \
     'r-rmarkdown=0.8*' \
     'r-forecast=5.8*' \
-    'r-stringr=0.6*' \
     'r-rsqlite=1.0*' \
     'r-reshape2=1.4*' \
     'r-nycflights13=0.1*' \
