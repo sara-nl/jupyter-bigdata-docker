@@ -1,31 +1,25 @@
-FROM jupyter/all-spark-notebook
+FROM jupyter/demo
+
+# from https://github.com/jupyterhub/dockerspawner
+
+EXPOSE 8888
+
+# nbgrader
+RUN conda install --quiet --yes -c jhamrick nbgrader && \
+    conda clean -tipsy && \
+    nbgrader extension install
 
 USER root
+RUN wget -q https://raw.githubusercontent.com/jupyterhub/jupyterhub/0.6.1/scripts/jupyterhub-singleuser -O /usr/local/bin/jupyterhub-singleuser && \
+    chmod 755 /usr/local/bin/jupyterhub-singleuser
 
-RUN apt-get update && \
-    apt-get install -yq libnetcdf-dev libhdf5-dev libgeos-dev libgdal-dev
+RUN userdel jovyan
+ENV SHELL /bin/bash
 
-RUN ln -s /usr/lib/libgeos-3.4.2.so /usr/lib/libgeos.so
+RUN mkdir /srv/singleuser && \
+    wget -q https://raw.githubusercontent.com/jupyterhub/dockerspawner/0.4.0/systemuser/systemuser.sh -O /srv/singleuser/systemuser.sh
 
-ENV PYSPARK_PYTHON=/opt/conda/envs/python2/bin/python2
+# smoke test entrypoint
+RUN USER_ID=65000 USER=systemusertest sh /srv/singleuser/systemuser.sh -h && userdel systemusertest
 
-RUN cd /usr/local/spark/conf/ && \
-    echo spark.driver.memory 16g > spark-defaults.conf
-
-USER jovyan
-
-RUN /opt/conda/envs/python2/bin/pip install test_helper
-
-RUN conda install --name python2 \
-    'pandas-datareader=0.2*'\
-    'pillow=3.0*'\
-    'pyproj=1.9*'\
-    'pil=1.1*'\
-    'netcdf4=1.1*'\
-    'graphviz=2.38*'\
-    'basemap=1.0*'\
-    && conda clean -yt
-
-RUN /opt/conda/envs/python2/bin/pip install networkx pyshp fiona xlrd folium shapely cesiumpy
-
-USER root
+CMD ["sh", "/srv/singleuser/systemuser.sh"]
