@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM jupyter/minimal-notebook
+FROM jupyter/minimal-notebook:bde52ed89463
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
@@ -51,8 +51,6 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
     apt-get clean && \
     npm install npm -g && \
     npm install -g bower
-
-
 
 USER jovyan
 
